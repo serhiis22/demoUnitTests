@@ -8,6 +8,11 @@ services:
       dockerfile: Subscription.Service/Presentation/WebApi/Dockerfile
     depends_on:
       - sqlserver
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80:80" # Открывает порт 80 на локальной машине и соединяет его с портом 80 в контейнере
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
@@ -16,7 +21,29 @@ services:
       MSSQL_SA_PASSWORD: "NewStrong!Password1"
       MSSQL_PID: "Evaluation"
     ports:
-      - "1433:1433"
+      - "1433:1433" # Открывает порт 1433 на локальной машине и соединяет его с портом 1433 в контейнере
     container_name: sqlpreview
     hostname: sqlpreview
+
+#version: '3.4'
+#
+#services:
+#  subscription.webapi:
+#    image: ${DOCKER_REGISTRY-}subscriptionwebapi
+#    build:
+#      context: .
+#      dockerfile: Subscription.Service/Presentation/WebApi/Dockerfile
+#    depends_on:
+#      - sqlserver
+#
+#  sqlserver:
+#    image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+#    environment:
+#      ACCEPT_EULA: "Y"
+#      MSSQL_SA_PASSWORD: "NewStrong!Password1"
+#      MSSQL_PID: "Evaluation"
+#    ports:
+#      - "1433:1433"
+#    container_name: sqlpreview
+#    hostname: sqlpreview
 
