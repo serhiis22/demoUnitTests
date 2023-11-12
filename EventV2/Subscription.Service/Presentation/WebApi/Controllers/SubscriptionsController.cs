@@ -16,12 +16,12 @@ public class SubscriptionsController : BaseController
         _mapper = mapper;
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<SubscriptionListVm>> Get(Guid id)
+    [HttpGet("{eventId}")]
+    public async Task<ActionResult<SubscriptionListVm>> Get(Guid eventId)
     {
         var query = new GetSubscriptionListQuery
         {
-            EventId = id
+            EventId = eventId
         };
         SubscriptionListVm vm = await Mediator.Send(query);
         return Ok(vm);
